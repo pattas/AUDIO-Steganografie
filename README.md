@@ -23,6 +23,10 @@ Audio Steganography je program pro skrývání a extrakci tajných zpráv v audi
 ![image](https://github.com/user-attachments/assets/80100712-cbcd-47af-a6ff-1a43e60ecc38)
 
 
+
+### Vývojový diagram
+![kryptopeklo drawio](https://github.com/user-attachments/assets/57b9b7fe-dcce-458c-9fc0-05f729a08171)
+
 ## Instalace
 
 ### Požadavky
