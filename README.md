@@ -20,7 +20,8 @@
 
 Audio Steganography je program pro skrývání a extrakci tajných zpráv v audio souborech formátu WAV. Program využívá metodu LSB (Least Significant Bit) k ukrytí dat a zajišťuje integritu zprávy pomocí hashovací funkce SHA-256. Pro dodatečnou bezpečnost je zpráva šifrována pomocí XOR šifrování.
 
-![Screenshot programu](screenshot.png)
+![image](https://github.com/user-attachments/assets/80100712-cbcd-47af-a6ff-1a43e60ecc38)
+
 
 ## Instalace
 
