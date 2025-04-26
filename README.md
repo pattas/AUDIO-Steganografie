@@ -48,7 +48,7 @@ python steg_gui.py
 
 ## Použití programu
 
-## důležitá informace o programu
+### Důležitá informace o programu
 - Program má jeden malý problém a to, že se musí nejprve zadat parametry jako zpráva a heslo a následně až vložit audio soubor. Pokud je to provedeno opačně program má problém s detekcí audiosouboru. Proto VŽDY VLOŽÍT NEJRPVE TEXT A HESLO A NÁSLEDNĚ AUDIO SOUBOR.
 
 Program má dvě hlavní funkce:
