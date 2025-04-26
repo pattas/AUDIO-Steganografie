@@ -78,7 +78,7 @@ Program automaticky vypočítává a zobrazuje následující informace:
 - Zbývající kapacita (v bitech, bajtech a znacích)
 - Maximální délka zprávy, kterou lze do souboru vložit
 
-Tyto informace se aktualizují v reálném čase při zadávání zprávy, hesla samotného audio souboru.
+Tyto informace se aktualizují v reálném čase při zadávání zprávy, hesla a samotného audio souboru.
 
 ### Zobrazení detailů procesu
 
