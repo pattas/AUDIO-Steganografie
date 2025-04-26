@@ -339,6 +339,37 @@ class StegGUI:
         self.create_widgets()
         
     def create_widgets(self):
+        # Vytvoření hlavního rámce s posuvníkem
+        main_frame = tk.Frame(self.root)
+        main_frame.pack(fill="both", expand=True)
+        
+        # Přidání vertikálního scrollbaru
+        main_scrollbar = tk.Scrollbar(main_frame, orient="vertical")
+        main_scrollbar.pack(side="right", fill="y")
+        
+        # Vytvoření plátna s posuvníkem
+        main_canvas = tk.Canvas(main_frame, yscrollcommand=main_scrollbar.set)
+        main_canvas.pack(side="left", fill="both", expand=True)
+        main_scrollbar.config(command=main_canvas.yview)
+        
+        # Vytvoření rámce uvnitř plátna pro obsah
+        content_frame = tk.Frame(main_canvas)
+        canvas_window = main_canvas.create_window((0, 0), window=content_frame, anchor="nw")
+        
+        # Nastavení posuvníku při změně velikosti okna
+        def configure_canvas(event):
+            main_canvas.configure(scrollregion=main_canvas.bbox("all"))
+            main_canvas.itemconfig(canvas_window, width=event.width)
+        
+        main_canvas.bind("<Configure>", configure_canvas)
+        content_frame.bind("<Configure>", lambda e: main_canvas.configure(scrollregion=main_canvas.bbox("all")))
+        
+        # Nastavení scrollování myší
+        def _on_mousewheel(event):
+            main_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+        
+        main_canvas.bind_all("<MouseWheel>", _on_mousewheel)
+        
         # Hlavní rámečky pro embed a extract sekce
         style = ttk.Style()
         style.configure('Embed.TLabelframe', background='#f0f8ff')
@@ -347,7 +378,7 @@ class StegGUI:
         style.configure('Extract.TLabelframe.Label', background='#fff0f5')
         
         # Embed sekce
-        embed_frame = ttk.LabelFrame(self.root, text="Schovej Message", padding="10", style='Embed.TLabelframe')
+        embed_frame = ttk.LabelFrame(content_frame, text="Schovej Message", padding="10", style='Embed.TLabelframe')
         embed_frame.pack(fill="both", expand=True, padx=10, pady=5)
         
         # Hlavní kontejner pro embed sekci
@@ -355,12 +386,17 @@ class StegGUI:
         embed_container.pack(fill="both", expand=True)
         
         # Extract sekce
-        extract_frame = ttk.LabelFrame(self.root, text="Extrahuj Message", padding="10", style='Extract.TLabelframe')
+        extract_frame = ttk.LabelFrame(content_frame, text="Extrahuj Message", padding="10", style='Extract.TLabelframe')
         extract_frame.pack(fill="both", expand=True, padx=10, pady=5)
         
         # Hlavní kontejner pro extract sekci
         extract_container = tk.Frame(extract_frame, bg='#fff0f5')
         extract_container.pack(fill="both", expand=True)
+        
+        # Status bar
+        self.status_var = tk.StringVar(value="Ready")
+        status_bar = ttk.Label(self.root, textvariable=self.status_var, relief="sunken", anchor="w")
+        status_bar.pack(side="bottom", fill="x", padx=10, pady=5)
         
         # Embed sekce - widgety
         ttk.Button(embed_container, text="Vyber WAV soubor, do kterého chceš zprávu vložit", 
@@ -442,12 +478,6 @@ class StegGUI:
         self.extracted_message_text = tk.Text(extract_container, height=5)
         self.extracted_message_text.pack(fill="x", pady=2)
         self.extracted_message_text.configure(bg='white', state="disabled")  # Zachováme bílé pozadí pro text
-        
-        # Status bar
-        self.status_var = tk.StringVar(value="Ready")
-        status_bar = ttk.Label(self.root, textvariable=self.status_var, 
-                             relief="sunken", anchor="w")
-        status_bar.pack(side="bottom", fill="x", padx=10, pady=5)
         
     def calculate_capacity(self, input_path):
         """Vypočítá kapacitu audio souboru pro ukrytí zprávy"""
